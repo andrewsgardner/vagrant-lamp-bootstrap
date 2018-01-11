@@ -1,22 +1,36 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
-VAGRANTFILE_API_VERSION = "2"
+Vagrant.configure("2") do |config|
 
-Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  SET_PROJECT_DIR = 'vagrantstack.dev'
+  SET_HOSTNAME = SET_PROJECT_DIR
 
-  # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "precise64"
+  config.vm.box_url = "https://files.vagrantup.com/precise64.box"
+  #config.vm.provision :shell, :path => "provision.sh"
+  #config.vm.synced_folder "./", "/var/www"
+  config.vm.synced_folder ".", "/var/www/#{SET_PROJECT_DIR}", type: "nfs"
+  config.vm.network :private_network, ip: "10.0.33.34"
+  config.vm.hostname = SET_HOSTNAME
 
-  # Create a private network, which allows host-only access to the machine using a specific IP.
-  config.vm.network "private_network", ip: "192.168.33.22"
+  # provision utility tools
+  config.vm.provision  "shell", path:  "./provision-utility.sh"
 
-  # Share an additional folder to the guest VM. The first argument is the path on the host to the actual folder.
-  # The second argument is the path on the guest to mount the folder.
-  config.vm.synced_folder "./", "/var/www/html"
+  # provision apache server
+  config.vm.provision "shell", path:  "./provision-apache.sh", env: {'PROJECT_DIR' => SET_PROJECT_DIR, 'HOSTNAME' => SET_HOSTNAME}
 
-  # Define the bootstrap file: A (shell) script that runs after first setup of your box (= provisioning)
-  config.vm.provision :shell, path: "bootstrap.sh"
+  # provision nodejs
+  #config.vm.provision "shell", path:  "./provision-nodejs.sh"
 
+  # provision mongodb
+  #config.vm.provision "shell", path:  "./provision-mongodb.sh"
+
+  # start services
+  #config.vm.provision "shell", path:  "./setup.sh", run: "always"
+
+  config.vm.provider :virtualbox do |vb|
+    vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
+    vb.customize ["modifyvm", :id, "--memory", "512"]
+  end
 end
