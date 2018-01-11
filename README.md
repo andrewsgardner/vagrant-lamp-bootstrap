@@ -2,7 +2,7 @@
 
 A super-simple Vagrantfile / bootstrap.sh to setup a LAMP stack inside Vagrant 100% automatically.
 
-### Whaaaaat ?
+<!-- ### Whaaaaat ? -->
 
 This is a reduced-to-the-max Vagrant setup file for a quick development stack. It will:
 
@@ -31,7 +31,7 @@ You can folder and password inside the bootstrap.sh for sure.
 ### How to use ?
 
 Put `Vagrantfile` and `bootstrap.sh` inside a folder and do a `vagrant up` on the command line.
-This box uses Ubuntu 14.04 LTS "Trustry Thar" 64bit, so if you don't have the basic box already, do a 
+This box uses Ubuntu 14.04 LTS "Trustry Thar" 64bit, so if you don't have the basic box already, do a
 `vagrant box add ubuntu/trusty64` before.
 
 ### Why ?
