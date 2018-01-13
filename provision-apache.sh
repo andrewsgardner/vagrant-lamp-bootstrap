@@ -1,20 +1,5 @@
 #!/usr/bin/env bash
 
-echo "Installing Apache..."
-
-#sudo apt-get update
-#sudo apt-get -y install apache2
-#sudo rm -Rf /var/www/html
-
-#PROJECTDIR='andrewsgardner.dev'
-
-sudo mkdir "/var/www/${PROJECT_DIR}"
-
-sudo apt-get update
-#sudo apt-get -y upgrade
-
-sudo apt-get install -y apache2
-
 VHOST=$(cat <<EOF
 <VirtualHost *:80>
     ServerName $HOSTNAME
@@ -26,9 +11,12 @@ VHOST=$(cat <<EOF
 </VirtualHost>
 EOF
 )
-echo "${VHOST}" > /etc/apache2/sites-available/000-default.conf
 
+echo "Installing Apache..."
+
+sudo mkdir "/var/www/${PROJECT_DIR}"
+sudo apt-get update
+sudo apt-get install -y apache2
+echo "${VHOST}" > /etc/apache2/sites-available/000-default.conf
 sudo a2enmod rewrite
 service apache2 restart
-
-echo "The dir is $PROJECT_DIR and $HOSTNAME"
