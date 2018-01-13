@@ -1,6 +1,3 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
-
 Vagrant.configure("2") do |config|
 
   SET_PROJECT_DIR = 'vagrantstack.dev'
@@ -8,8 +5,6 @@ Vagrant.configure("2") do |config|
 
   config.vm.box = "precise64"
   config.vm.box_url = "https://files.vagrantup.com/precise64.box"
-  #config.vm.provision :shell, :path => "provision.sh"
-  #config.vm.synced_folder "./", "/var/www"
   config.vm.synced_folder ".", "/var/www/#{SET_PROJECT_DIR}", type: "nfs"
   config.vm.network :private_network, ip: "10.0.33.34"
   config.vm.hostname = SET_HOSTNAME
