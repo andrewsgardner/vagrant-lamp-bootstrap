@@ -13,10 +13,13 @@ Vagrant.configure("2") do |config|
   config.vm.provision  "shell", path:  "./provision-utility.sh"
 
   # provision apache server
-  config.vm.provision "shell", path:  "./provision-apache.sh", env: {'PROJECT_DIR' => SET_PROJECT_DIR, 'HOSTNAME' => SET_HOSTNAME}
+  config.vm.provision "shell", path:  "./provision-apache.sh", env: {
+    'PROJECT_DIR' => SET_PROJECT_DIR,
+    'HOSTNAME' => SET_HOSTNAME
+  }
 
   # provision nodejs
-  #config.vm.provision "shell", path:  "./provision-nodejs.sh"
+  config.vm.provision "shell", path:  "./provision-nodejs.sh"
 
   config.vm.provider :virtualbox do |vb|
     vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
