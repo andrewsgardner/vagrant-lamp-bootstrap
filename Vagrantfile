@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
 
-  SET_PROJECT_DIR = 'vagrantstack.dev'
+  SET_PROJECT_DIR = 'vagrantstack.vm'
   SET_HOSTNAME = SET_PROJECT_DIR
 
   config.vm.box = "precise64"

@@ -17,7 +17,6 @@ sudo apt-get install -y apache2
 
 VHOST=$(cat <<EOF
 <VirtualHost *:80>
-    # test
     ServerName $HOSTNAME
     DocumentRoot "/var/www/${PROJECT_DIR}"
     <Directory "/var/www/${PROJECT_DIR}">
