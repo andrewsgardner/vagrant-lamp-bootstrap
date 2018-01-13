@@ -6,7 +6,7 @@ Vagrant.configure("2") do |config|
   config.vm.box = "precise64"
   config.vm.box_url = "https://files.vagrantup.com/precise64.box"
   config.vm.synced_folder ".", "/var/www/#{SET_PROJECT_DIR}", type: "nfs"
-  config.vm.network :private_network, ip: "10.0.33.34"
+  config.vm.network :private_network, ip: "192.168.33.16"
   config.vm.hostname = SET_HOSTNAME
 
   # provision utility tools
@@ -17,12 +17,6 @@ Vagrant.configure("2") do |config|
 
   # provision nodejs
   #config.vm.provision "shell", path:  "./provision-nodejs.sh"
-
-  # provision mongodb
-  #config.vm.provision "shell", path:  "./provision-mongodb.sh"
-
-  # start services
-  #config.vm.provision "shell", path:  "./setup.sh", run: "always"
 
   config.vm.provider :virtualbox do |vb|
     vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
