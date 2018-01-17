@@ -23,6 +23,9 @@ Vagrant.configure("2") do |config|
     'DOCUMENT_ROOT' => SET_DOCUMENT_ROOT
   }
 
+  # provision php 5
+  config.vm.provision  "shell", path:  "./provision-php5.sh"
+
   # provision nodejs
   config.vm.provision "shell", path:  "./provision-nodejs.sh"
 
