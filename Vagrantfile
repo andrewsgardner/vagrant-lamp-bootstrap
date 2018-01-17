@@ -5,6 +5,7 @@ Vagrant.configure("2") do |config|
 
   SET_PROJECT_DIR = 'vagrantstack.vm'
   SET_HOSTNAME = SET_PROJECT_DIR
+  SET_DOCUMENT_ROOT = 'public_html'
 
   config.vm.box = "precise64"
   config.vm.box_url = "https://files.vagrantup.com/precise64.box"
@@ -18,7 +19,8 @@ Vagrant.configure("2") do |config|
   # provision apache server
   config.vm.provision "shell", path:  "./provision-apache.sh", env: {
     'PROJECT_DIR' => SET_PROJECT_DIR,
-    'HOSTNAME' => SET_HOSTNAME
+    'HOSTNAME' => SET_HOSTNAME,
+    'DOCUMENT_ROOT' => SET_DOCUMENT_ROOT
   }
 
   # provision nodejs
