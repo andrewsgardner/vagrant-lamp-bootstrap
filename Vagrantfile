@@ -6,6 +6,7 @@ Vagrant.configure("2") do |config|
   SET_PROJECT_DIR = 'vagrantstack.vm'
   SET_HOSTNAME = SET_PROJECT_DIR
   SET_DOCUMENT_ROOT = 'public_html'
+  SET_MYSQL_PASSWORD = 'admin'
 
   config.vm.box = "precise64"
   config.vm.box_url = "https://files.vagrantup.com/precise64.box"
@@ -25,6 +26,11 @@ Vagrant.configure("2") do |config|
 
   # provision php 5
   config.vm.provision  "shell", path:  "./provision-php5.sh"
+
+  # provision mysql
+  config.vm.provision  "shell", path:  "./provision-mysql.sh", env: {
+    'MYSQL_PASSWORD' => SET_MYSQL_PASSWORD
+  }
 
   # provision nodejs
   config.vm.provision "shell", path:  "./provision-nodejs.sh"
