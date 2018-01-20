@@ -41,6 +41,9 @@ Vagrant.configure("2") do |config|
   # provision nodejs
   config.vm.provision "shell", path:  "./provision-nodejs.sh"
 
+  # provision mongodb
+  config.vm.provision "shell", path:  "./provision-mongodb.sh"
+  
   config.vm.provider :virtualbox do |vb|
     vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
     vb.customize ["modifyvm", :id, "--memory", "1024"]
