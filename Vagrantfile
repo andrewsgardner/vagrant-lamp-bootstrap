@@ -16,34 +16,34 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = SET_HOSTNAME
 
   # provision utility tools
-  config.vm.provision  "shell", path:  "./provision-utility.sh"
+  config.vm.provision  "shell", path:  "./provision/utility.sh"
 
   # provision apache server
-  config.vm.provision "shell", path:  "./provision-apache.sh", env: {
+  config.vm.provision "shell", path:  "./provision/apache.sh", env: {
     'PROJECT_DIR' => SET_PROJECT_DIR,
     'HOSTNAME' => SET_HOSTNAME,
     'DOCUMENT_ROOT' => SET_DOCUMENT_ROOT
   }
 
   # provision php 5
-  config.vm.provision  "shell", path:  "./provision-php5.sh"
+  config.vm.provision  "shell", path:  "./provision/php5.sh"
 
   # provision mysql
-  config.vm.provision  "shell", path:  "./provision-mysql.sh", env: {
+  config.vm.provision  "shell", path:  "./provision/mysql.sh", env: {
     'MYSQL_PASSWORD' => SET_MYSQL_PASSWORD
   }
 
   # provision phpmyadmin
-  config.vm.provision  "shell", path:  "./provision-phpmyadmin.sh", env: {
+  config.vm.provision  "shell", path:  "./provision/phpmyadmin.sh", env: {
     'PHPMYADMIN_PASSWORD' => SET_PHPMYADMIN_PASSWORD
   }
 
   # provision nodejs
-  config.vm.provision "shell", path:  "./provision-nodejs.sh"
+  config.vm.provision "shell", path:  "./provision/nodejs.sh"
 
   # provision mongodb
-  config.vm.provision "shell", path:  "./provision-mongodb.sh"
-  
+  config.vm.provision "shell", path:  "./provision/mongodb.sh"
+
   config.vm.provider :virtualbox do |vb|
     vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
     vb.customize ["modifyvm", :id, "--memory", "1024"]
