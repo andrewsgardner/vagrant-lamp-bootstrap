@@ -1,6 +1,6 @@
-# vagrant-lamp-bootstrap
+# vagrantStack
 
-A super-simple Vagrantfile / bootstrap.sh to setup a LAMP stack inside Vagrant 100% automatically.
+A vagrant dev stack that provisions and Apache, MySQL, PHP5, phpMyAdmin, NodeJS, and MongoDB.
 
 <!-- ### Whaaaaat ? -->
 
