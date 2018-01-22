@@ -6,6 +6,8 @@ Vagrant.configure("2") do |config|
   SET_PROJECT_DIR = 'vagrantstack.vm'
   SET_HOSTNAME = SET_PROJECT_DIR
   SET_DOCUMENT_ROOT = 'public_html'
+  SET_NODE_SERVER_PATH = 'server/server.js'
+  SET_APACHE_PORT = '81'
   SET_MYSQL_PASSWORD = 'admin'
   SET_PHPMYADMIN_PASSWORD = 'admin'
 
@@ -20,6 +22,7 @@ Vagrant.configure("2") do |config|
 
   # provision apache server
   config.vm.provision "shell", path:  "./provision/apache.sh", env: {
+    'APACHE_PORT' => SET_APACHE_PORT,
     'PROJECT_DIR' => SET_PROJECT_DIR,
     'HOSTNAME' => SET_HOSTNAME,
     'DOCUMENT_ROOT' => SET_DOCUMENT_ROOT
@@ -43,6 +46,9 @@ Vagrant.configure("2") do |config|
 
   # provision mongodb
   config.vm.provision "shell", path:  "./provision/mongodb.sh"
+
+  # start node server - comment out if using apache on port 80
+  config.vm.provision "shell", inline: "sudo node /var/www/#{SET_PROJECT_DIR}/#{SET_NODE_SERVER_PATH}"
 
   config.vm.provider :virtualbox do |vb|
     vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
