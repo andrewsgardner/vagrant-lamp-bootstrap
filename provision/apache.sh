@@ -1,7 +1,21 @@
 #!/usr/bin/env bash
 
+APACHE_PORTS=$(cat <<EOF
+NameVirtualHost *:${APACHE_PORT}
+Listen ${APACHE_PORT}
+
+<IfModule mod_ssl.c>
+    Listen 443
+</IfModule>
+
+<IfModule mod_gnutls.c>
+    Listen 443
+</IfModule>
+EOF
+)
+
 APACHE_CONF=$(cat <<EOF
-<VirtualHost *:80>
+<VirtualHost *:${APACHE_PORT}>
     ServerAdmin webmaster@${PROJECT_DIR}
     DocumentRoot /var/www/${PROJECT_DIR}/${DOCUMENT_ROOT}
 
@@ -47,7 +61,7 @@ EOF
 )
 
 VHOST=$(cat <<EOF
-<VirtualHost *:80>
+<VirtualHost *:${APACHE_PORT}>
     ServerName $HOSTNAME
     DocumentRoot "/var/www/${PROJECT_DIR}/${DOCUMENT_ROOT}"
     <Directory "/var/www/${PROJECT_DIR}/${DOCUMENT_ROOT}">
@@ -64,6 +78,7 @@ sudo mkdir "/var/www/${PROJECT_DIR}/${DOCUMENT_ROOT}"
 sudo apt-get update
 sudo apt-get install -y apache2
 sudo rm /var/www/index.html
+echo "${APACHE_PORTS}" > /etc/apache2/ports.conf
 echo "${APACHE_CONF}" > /etc/apache2/sites-available/default
 echo "${VHOST}" > /etc/apache2/sites-available/000-default.conf
 sudo a2enmod rewrite
