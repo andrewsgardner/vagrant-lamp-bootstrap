@@ -4,6 +4,8 @@ A vagrant dev stack that provisions and Apache, MySQL, PHP5, phpMyAdmin, NodeJS,
 
 <!-- ### Whaaaaat ? -->
 
+## Modify Your Hosts File
+
 This is a reduced-to-the-max Vagrant setup file for a quick development stack. It will:
 
 * setup a Ubuntu 14.04 LTS "Trustry Thar" 64bit box
