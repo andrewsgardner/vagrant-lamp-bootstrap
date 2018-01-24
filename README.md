@@ -6,6 +6,11 @@ A vagrant dev stack that provisions and Apache, MySQL, PHP5, phpMyAdmin, NodeJS,
 
 ## Modify Your Hosts File
 
+Make the following addition to your computer's hosts file. It should exist in the following directory on the Windows 10 OS: 'C:\Windows\System32\drivers\etc\hosts'
+
+192.168.33.16   vagrantstack.vm
+
+
 This is a reduced-to-the-max Vagrant setup file for a quick development stack. It will:
 
 * setup a Ubuntu 14.04 LTS "Trustry Thar" 64bit box
