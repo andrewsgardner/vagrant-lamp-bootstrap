@@ -1,6 +1,6 @@
 # vagrantStack
 
-A vagrant dev stack that provisions and Apache, MySQL, PHP5, phpMyAdmin, NodeJS, and MongoDB.
+A vagrant dev stack that provisions Apache, MySQL, PHP5, phpMyAdmin, NodeJS, and MongoDB.
 
 <!-- ### Whaaaaat ? -->
 
