@@ -36,7 +36,7 @@ Put the project files in this repository inside a folder and do a `vagrant up` o
 
 ### Vagrant Destroy Workaround
 
-You may receive a warning message when doing a `vagrant destroy` that says something like the following:
+You may receive an error when doing a `vagrant destroy` like the following:
 
 
 ```
@@ -46,7 +46,7 @@ Vagrant locks each machine for access by only one process at a time.
 Please wait until the other Vagrant process finishes modifying this
 machine, then try again.
 ```
-The VM can be destroyed by doing killing the vagrant process.
+The VM can be destroyed by killing a process called vagrant.
 
 1. SSH into the box: `vagrant ssh`
 2. Locate the process number for vagrant: `ps aux | grep vagrant`
