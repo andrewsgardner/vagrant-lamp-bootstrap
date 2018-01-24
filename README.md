@@ -30,11 +30,11 @@ An Ubuntu 12.04 LTS 64bit box will be provisioned with the following features:
 
 ###### * Ensure that Apache and MongoDB/Node server aren't running on the same port. The default is 80.
 
-### How To Use
+## How To Use
 
 Put the project files in this repository inside a folder and do a `vagrant up` on the command line.
 
-### Vagrant Destroy Workaround
+## Vagrant Destroy Workaround
 
 You may receive an error when doing a `vagrant destroy` like the following:
 
