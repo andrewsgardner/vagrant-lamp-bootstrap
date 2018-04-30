@@ -1,28 +1,23 @@
 #!/usr/bin/env bash
 
-APACHE_PORTS=$(cat <<EOF
-NameVirtualHost *:${APACHE_PORT}
-Listen ${APACHE_PORT}
-
-    <Directory />
-        Options FollowSymLinks
-        AllowOverride None
-    </Directory>
-
-<IfModule mod_ssl.c>
-    Listen 443
-</IfModule>
-
-<IfModule mod_gnutls.c>
-    Listen 443
-</IfModule>
-EOF
-)
+echo "Setting NodeJS port as a proxy on Apache..."
 
 APACHE_CONF=$(cat <<EOF
 <VirtualHost *:${APACHE_PORT}>
     ServerAdmin webmaster@${PROJECT_DIR}
     DocumentRoot /var/www/${PROJECT_DIR}/${DOCUMENT_ROOT}
+    ProxyRequests Off
+    ProxyPreserveHost On
+    ProxyVia Full
+
+    <Proxy *>
+        Require all granted
+    </Proxy>
+
+    <Location />
+      ProxyPass http://${PROJECT_DIR}:3000
+      ProxyPassReverse http://${PROJECT_DIR}:3000
+    </Location>
 
     <Directory />
         Options FollowSymLinks
@@ -69,6 +64,19 @@ VHOST=$(cat <<EOF
 <VirtualHost *:${APACHE_PORT}>
     ServerName $HOSTNAME
     DocumentRoot "/var/www/${PROJECT_DIR}/${DOCUMENT_ROOT}"
+    ProxyRequests Off
+    ProxyPreserveHost On
+    ProxyVia Full
+
+    <Proxy *>
+        Require all granted
+    </Proxy>
+
+    <Location />
+      ProxyPass http://${PROJECT_DIR}:3000
+      ProxyPassReverse http://${PROJECT_DIR}:3000
+    </Location>
+
     <Directory "/var/www/${PROJECT_DIR}/${DOCUMENT_ROOT}">
         AllowOverride All
         Require all granted
@@ -77,13 +85,12 @@ VHOST=$(cat <<EOF
 EOF
 )
 
-echo "Installing Apache..."
-
+sudo chmod 755 /var/www/${PROJECT_DIR}
 sudo apt-get update
-sudo apt-get install -y apache2
-sudo rm -rf /var/www/html
-echo "${APACHE_PORTS}" > /etc/apache2/ports.conf
+sudo a2enmod proxy
+sudo a2enmod proxy_http
+sudo service apache2 restart
 echo "${APACHE_CONF}" > /etc/apache2/sites-available/default
 echo "${VHOST}" > /etc/apache2/sites-available/000-default.conf
-sudo a2enmod rewrite
 sudo service apache2 restart
+sudo node /var/www/${PROJECT_DIR}/server/server.js

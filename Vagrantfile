@@ -7,12 +7,11 @@ Vagrant.configure("2") do |config|
   SET_HOSTNAME = SET_PROJECT_DIR
   SET_DOCUMENT_ROOT = 'public_html'
   SET_NODE_SERVER_PATH = 'server/server.js'
-  SET_APACHE_PORT = '81'
+  SET_APACHE_PORT = '80'
   SET_MYSQL_PASSWORD = 'admin'
   SET_PHPMYADMIN_PASSWORD = 'admin'
 
-  config.vm.box = "precise64"
-  config.vm.box_url = "https://files.vagrantup.com/precise64.box"
+  config.vm.box = "ubuntu/xenial64"
   config.vm.synced_folder ".", "/var/www/#{SET_PROJECT_DIR}", type: "nfs"
   config.vm.network :private_network, ip: "192.168.33.16"
   config.vm.hostname = SET_HOSTNAME
@@ -28,8 +27,8 @@ Vagrant.configure("2") do |config|
     'DOCUMENT_ROOT' => SET_DOCUMENT_ROOT
   }
 
-  # provision php 5
-  config.vm.provision  "shell", path:  "./provision/php5.sh"
+  # provision php
+  config.vm.provision  "shell", path:  "./provision/php.sh"
 
   # provision mysql
   config.vm.provision  "shell", path:  "./provision/mysql.sh", env: {
@@ -47,8 +46,13 @@ Vagrant.configure("2") do |config|
   # provision mongodb
   config.vm.provision "shell", path:  "./provision/mongodb.sh"
 
-  # start node server - comment out if using apache on port 80
-  config.vm.provision "shell", inline: "sudo node /var/www/#{SET_PROJECT_DIR}/#{SET_NODE_SERVER_PATH}"
+  # run nodejs app as a proxy on apache
+  config.vm.provision "shell", path:  "./provision/proxy.sh", env: {
+    'APACHE_PORT' => SET_APACHE_PORT,
+    'PROJECT_DIR' => SET_PROJECT_DIR,
+    'HOSTNAME' => SET_HOSTNAME,
+    'DOCUMENT_ROOT' => SET_DOCUMENT_ROOT
+  }
 
   config.vm.provider :virtualbox do |vb|
     vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
