@@ -1,8 +1,6 @@
 # vagrantStack
 
-A vagrant dev stack that provisions Apache, MySQL, PHP5, phpMyAdmin, NodeJS, and MongoDB.
-
-<!-- ### Whaaaaat ? -->
+A vagrant dev stack that provisions Apache, MySQL, PHP7, phpMyAdmin, NodeJS, and MongoDB.
 
 ## Modify Your Computer's Hosts File
 
@@ -12,7 +10,9 @@ Update your machine's hosts file to include ip and domian properties set in the 
 
 ## Features
 
-An Ubuntu 12.04 LTS 64bit box will be provisioned with the following features:
+An Ubuntu 16.04.3 LTS 64bit box will be provisioned with the following features:
+
+* Run your Node app as a proxy on Apache.
 
 * Set a custom name for your project directory at `/var/www/${PROJECT_DIR}`
 
